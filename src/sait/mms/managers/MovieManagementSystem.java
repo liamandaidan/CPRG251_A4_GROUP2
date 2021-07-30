@@ -15,8 +15,7 @@ import sait.mms.problemdomain.Movie;
 public class MovieManagementSystem {
 
 	private MariaDBDriver md;
-	private Scanner in;  
-	
+	private Scanner in;
 
 	/**
 	*
@@ -34,10 +33,12 @@ public class MovieManagementSystem {
 	}
 
 	public void displayMenu() throws SQLException {
-
+		
+		String title;
+		int id, duration, year;
 		
 				
-				int option;
+		int option;
 	
 		
 		in = new Scanner(System.in);
@@ -80,19 +81,17 @@ public class MovieManagementSystem {
 
 	}
 
-	
-
 	/**
 	 * 
-	 * @param id the movie id
-	 * @param dur the movie duration
+	 * @param id    the movie id
+	 * @param dur   the movie duration
 	 * @param title the movie title
-	 * @param yr the year the movie released
+	 * @param yr    the year the movie released
 	 */
 	public void addMovie(int id, int dur, String title, int yr) throws SQLException {
 		Movie film = new Movie(id, dur, title, yr);
-		String sqlStatement = "INSERT INTO movies(id, duration, title, year) VALUES(" + film.getId() + "," + film.getDuration() + ",'"
-				+ film.getTitle() + "'," + film.getYear() + ");";
+		String sqlStatement = "INSERT INTO movies(id, duration, title, year) VALUES(" + film.getId() + ","
+				+ film.getDuration() + ",'" + film.getTitle() + "'," + film.getYear() + ");";
 		int rows = md.update(sqlStatement);
 		System.out.println(rows + " rows added to database.");
 
@@ -101,13 +100,12 @@ public class MovieManagementSystem {
 	/**
 	 * @param yr the year to display
 	 */
-	public void printMoviesInYear(int yr) throws SQLException{
+	public void printMoviesInYear(int yr) throws SQLException {
 		String sqlStatement = "SELECT * FROM movies WHERE year = " + yr + ";";
 		ResultSet result = md.get(sqlStatement);
 		int numResults = result.getFetchSize();
 		int counter = 1;
-		while(result.next())
-		{
+		while (result.next()) {
 			System.out.println(result.getString(counter));
 			counter++;
 		}
@@ -117,12 +115,11 @@ public class MovieManagementSystem {
 	 * 
 	 */
 	public void printRandomMovies() {
-		//Step 1 select how many movies there are total 
+		// Step 1 select how many movies there are total
 		String sqlStmt = "SELECT COUNT(id) FROM movies";
-		//Step 2 select a random movie
-		
-		
-		//Watch out for an index removal case. EG movie at ID 2 missing
+		// Step 2 select a random movie
+
+		// Watch out for an index removal case. EG movie at ID 2 missing
 	}
 
 	/**
