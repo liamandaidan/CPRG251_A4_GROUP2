@@ -126,10 +126,15 @@ public class MovieManagementSystem {
 	 * 
 	 */
 	public void deleteMovie(int movieId) {
-    	// take movie id
-    	String
-    	// DELETE FROM movies WHERE id = movieId;
-    
+    	
+		// take movie id
+		try {   	
+    	String sqlStmt = String.format("DELETE FROM movies WHERE id = %s",movieId);
 
-	}
+			int rows = md.update(sqlStmt);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ 	}
 }
