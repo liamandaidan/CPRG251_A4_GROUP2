@@ -130,7 +130,7 @@ public class MovieManagementSystem {
 	 */
 	public void deleteMovie(int movieId) {
     	// take movie id
-    	String
+    	
     	// DELETE FROM movies WHERE id = movieId;
     
 
