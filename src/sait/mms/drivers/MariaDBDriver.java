@@ -20,6 +20,7 @@ public class MariaDBDriver implements DatabaseDriver {
 
 	@Override
 	public void connect() throws SQLException {
+		System.out.println("connection worked!");
 		String dsn = getDsn();
 		connection = DriverManager.getConnection(dsn);
 
@@ -34,6 +35,7 @@ public class MariaDBDriver implements DatabaseDriver {
 	@Override
 	public void disconnect() throws SQLException {
 		if (connection != null && !connection.isClosed()) {
+			System.out.println("Disconnected!");
 			connection.close();
 		}
 

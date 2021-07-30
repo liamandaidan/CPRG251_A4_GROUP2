@@ -6,7 +6,7 @@ package sait.mms.managers;
 import sait.mms.problemdomain.Movie;
 
 /**
- * @author liamm
+ * @author Benson
  *
  */
 public class MovieManagementSystem {
