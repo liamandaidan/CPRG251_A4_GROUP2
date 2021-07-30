@@ -104,9 +104,12 @@ public class MovieManagementSystem {
 	public void printMoviesInYear(int yr) throws SQLException{
 		String sqlStatement = "SELECT * FROM movies WHERE year = " + yr + ";";
 		ResultSet result = md.get(sqlStatement);
+		int numResults = result.getFetchSize();
+		int counter = 1;
 		while(result.next())
 		{
-			
+			System.out.println(result.getString(counter));
+			counter++;
 		}
 	}
 
