@@ -31,6 +31,12 @@ public class MovieManagementSystem {
 		}
 
 	}
+	
+	/**
+	 * @author Robyn 
+	 * @throws SQLException
+	 */
+	
 
 	public void displayMenu() throws SQLException {
 
@@ -45,7 +51,7 @@ public class MovieManagementSystem {
 
 		do {
 
-			System.out.printf("Jim's Movie Manager" + "1. Add New Movie%n" + "2. Print movies releaased in year%n"
+			System.out.printf("Jim's Movie Manager%n" + "1. Add New Movie%n" + "2. Print movies releaased in year%n"
 					+ "3. Print random list of movies%n" + "4. Delete a movie%n" + "5. Exit%n%n");
 
 			System.out.printf("Enter option: ");
