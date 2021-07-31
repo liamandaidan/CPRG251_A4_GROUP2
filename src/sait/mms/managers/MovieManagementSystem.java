@@ -58,7 +58,7 @@ public class MovieManagementSystem {
 
 			try {
 				option = in.nextInt();
-
+				in.nextLine(); // flush the line
 				switch (option) {
 				case 1:
 					System.out.println("Enter movie title: ");
@@ -67,7 +67,7 @@ public class MovieManagementSystem {
 					duration = in.nextInt();
 					System.out.println("Enter year: ");
 					year = in.nextInt();
-					// addMovie(title, duration, year);
+					addMovie(duration, title, year);
 					break;
 				case 2:
 					System.out.println("Enter in year: ");
@@ -81,6 +81,7 @@ public class MovieManagementSystem {
 				case 4:
 					System.out.println("Enter the movie ID you want to delete: ");
 					id = in.nextInt();
+					deleteMovie(id);
 					break;
 				case 5:
 					valid = true;
@@ -111,10 +112,10 @@ public class MovieManagementSystem {
 	 * @param title the movie title
 	 * @param yr    the year the movie released
 	 */
-	public void addMovie(int id, int dur, String title, int yr) throws SQLException {
-		Movie film = new Movie(id, dur, title, yr);
-		String sqlStatement = "INSERT INTO movies(id, duration, title, year) VALUES(" + film.getId() + ","
-				+ film.getDuration() + ",'" + film.getTitle() + "'," + film.getYear() + ");";
+	public void addMovie(int dur, String title, int yr) throws SQLException {
+		Movie film = new Movie(dur, title, yr);
+		String sqlStatement = "INSERT INTO movies(duration, title, year) VALUES("+ film.getDuration() + ",'" + 
+				film.getTitle() + "'," + film.getYear() + ");";
 		int rows = md.update(sqlStatement);
 		System.out.println(rows + " rows added to database.");
 
@@ -149,10 +150,15 @@ public class MovieManagementSystem {
 	 * 
 	 */
 	public void deleteMovie(int movieId) {
-    	// take movie id
-    	
-    	// DELETE FROM movies WHERE id = movieId;
-    
 
+		// take movie id
+		try {   	
+    	String sqlStmt = String.format("DELETE FROM movies WHERE id = %s",movieId);
+
+			int rows = md.update(sqlStmt);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
 	}
 }
