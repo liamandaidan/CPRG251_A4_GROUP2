@@ -18,7 +18,7 @@ public class MovieManagementSystem {
 	private Scanner in;
 
 	/**
-	*
+	* No arg constructor for Movie Management System.
 	*
 	*/
 	public MovieManagementSystem() {
