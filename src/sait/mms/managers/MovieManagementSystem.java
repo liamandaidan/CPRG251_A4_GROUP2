@@ -82,10 +82,10 @@ public class MovieManagementSystem {
 	 * @param title the movie title
 	 * @param yr    the year the movie released
 	 */
-	public void addMovie(int id, int dur, String title, int yr) throws SQLException {
-		Movie film = new Movie(id, dur, title, yr);
-		String sqlStatement = "INSERT INTO movies(id, duration, title, year) VALUES(" + film.getId() + ","
-				+ film.getDuration() + ",'" + film.getTitle() + "'," + film.getYear() + ");";
+	public void addMovie( int dur, String title, int yr) throws SQLException {
+		Movie film = new Movie( dur, title, yr);
+		String sqlStatement = "INSERT INTO movies(duration, title, year) VALUES(" + film.getDuration() + ",'" + 
+				film.getTitle() + "'," + film.getYear() + ");";
 		int rows = md.update(sqlStatement);
 		System.out.println(rows + " rows added to database.");
 
@@ -120,10 +120,15 @@ public class MovieManagementSystem {
 	 * 
 	 */
 	public void deleteMovie(int movieId) {
-    	// take movie id
-    	String
-    	// DELETE FROM movies WHERE id = movieId;
-    
+    	
+		// take movie id
+		try {   	
+    	String sqlStmt = String.format("DELETE FROM movies WHERE id = %s",movieId);
 
-	}
+			int rows = md.update(sqlStmt);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ 	}
 }
