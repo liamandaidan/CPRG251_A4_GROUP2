@@ -33,22 +33,16 @@ public class MovieManagementSystem {
 	}
 
 	public void displayMenu() throws SQLException {
-		
+
 		String title;
 		int id, duration, year;
-		
-				
+
 		int option;
-	
-		
+
 		in = new Scanner(System.in);
 
-		System.out.printf("Jim's Movie Manager" 
-				+ "1. Add New Movie%n" 
-				+ "2. Print movies releaased in year%n"
-				+ "3. Print random list of movies%n" 
-				+ "4. Delete a movie%n" 
-				+ "5. Exit%n%n");
+		System.out.printf("Jim's Movie Manager" + "1. Add New Movie%n" + "2. Print movies releaased in year%n"
+				+ "3. Print random list of movies%n" + "4. Delete a movie%n" + "5. Exit%n%n");
 
 		System.out.printf("Enter option: ");
 		option = in.nextInt();
@@ -74,13 +68,13 @@ public class MovieManagementSystem {
 				
 			case 4:
 			}
-		
-		// exit
-		md.disconnect();
-		in.close();
 
+			// exit
+			md.disconnect();
+			in.close();
+
+		}
 	}
-
 	/**
 	 * 
 	 * @param id    the movie id
