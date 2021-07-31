@@ -38,43 +38,66 @@ public class MovieManagementSystem {
 		int id, duration, year;
 
 		int option;
+		int randomMovieNum;
+		boolean valid = false;
 
 		in = new Scanner(System.in);
 
-		System.out.printf("Jim's Movie Manager" + "1. Add New Movie%n" + "2. Print movies releaased in year%n"
-				+ "3. Print random list of movies%n" + "4. Delete a movie%n" + "5. Exit%n%n");
+		do {
 
-		System.out.printf("Enter option: ");
-		option = in.nextInt();
+			System.out.printf("Jim's Movie Manager" + "1. Add New Movie%n" + "2. Print movies releaased in year%n"
+					+ "3. Print random list of movies%n" + "4. Delete a movie%n" + "5. Exit%n%n");
 
-		while (option != 5) {
-			switch (option) {
-			case 1:
-				System.out.println("Enter movie title: ");
-				title = in.nextLine();
-				System.out.println("Enter duration: ");
-				duration = in.nextInt();
-				System.out.println("Enter year: ");
-				year = in.nextInt();
-				addMovie(title, duration, year);
-				break;
-			case 2:
-				System.out.println("Enter in year: ");
-				year = in.nextInt();
-				printMoviesInYear(year);
-				break;
-			case 3:
-				System.out.println("Enter number of movies: ");
-				
-			case 4:
+			System.out.printf("Enter option: ");
+
+			try {
+				option = in.nextInt();
+
+				switch (option) {
+				case 1:
+					System.out.println("Enter movie title: ");
+					title = in.nextLine();
+					System.out.println("Enter duration: ");
+					duration = in.nextInt();
+					System.out.println("Enter year: ");
+					year = in.nextInt();
+					// addMovie(title, duration, year);
+					break;
+				case 2:
+					System.out.println("Enter in year: ");
+					year = in.nextInt();
+					printMoviesInYear(year);
+					break;
+				case 3:
+					System.out.println("Enter number of movies: ");
+					randomMovieNum = in.nextInt();
+					break;
+				case 4:
+					System.out.println("Enter the movie ID you want to delete: ");
+					id = in.nextInt();
+					break;
+				case 5:
+					valid = true;
+					break;
+				default:
+					System.out.println("Please enter a number from 1 - 5.\n");
+					break;
+				}
+
+			} catch (InputMismatchException e) {
+				System.out.println("Please enter a number from 1 - 5.\n");
+				in.next(); // clear the input
+				continue;
 			}
 
-			// exit
-			md.disconnect();
-			in.close();
+		} while (!valid);
 
-		}
+		// exit
+		md.disconnect();
+		in.close();
+
 	}
+
 	/**
 	 * 
 	 * @param id    the movie id
@@ -121,7 +144,7 @@ public class MovieManagementSystem {
 	 */
 	public void deleteMovie(int movieId) {
     	// take movie id
-    	String
+    	
     	// DELETE FROM movies WHERE id = movieId;
     
 
