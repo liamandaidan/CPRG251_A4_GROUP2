@@ -13,7 +13,7 @@ import sait.mms.contracts.DatabaseDriver;
 public class MariaDBDriver implements DatabaseDriver {
 	private static final String SERVER = "localhost";
 	private static final int PORT = 3306;
-	private static final String DATABASE = "cprg251";
+	private static final String DATABASE = "movies";
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "password";
 	Connection connection;

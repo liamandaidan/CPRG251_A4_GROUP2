@@ -18,9 +18,9 @@ public class MovieManagementSystem {
 	private Scanner in;
 
 	/**
-	* No arg constructor for Movie Management System.
-	*
-	*/
+	 * No arg constructor for Movie Management System.
+	 *
+	 */
 	public MovieManagementSystem() {
 		try {
 			md = new MariaDBDriver();
@@ -31,12 +31,11 @@ public class MovieManagementSystem {
 		}
 
 	}
-	
+
 	/**
-	 * @author Robyn 
+	 * @author Robyn
 	 * @throws SQLException
 	 */
-	
 
 	public void displayMenu() throws SQLException {
 
@@ -114,8 +113,8 @@ public class MovieManagementSystem {
 	 */
 	public void addMovie(int dur, String title, int yr) throws SQLException {
 		Movie film = new Movie(dur, title, yr);
-		String sqlStatement = "INSERT INTO movies(duration, title, year) VALUES("+ film.getDuration() + ",'" + 
-				film.getTitle() + "'," + film.getYear() + ");";
+		String sqlStatement = "INSERT INTO movies(duration, title, year) VALUES(" + film.getDuration() + ",'"
+				+ film.getTitle() + "'," + film.getYear() + ");";
 		int rows = md.update(sqlStatement);
 		System.out.println(rows + " rows added to database.");
 
@@ -130,7 +129,8 @@ public class MovieManagementSystem {
 		int numResults = result.getFetchSize();
 		int counter = 1;
 		while (result.next()) {
-			System.out.println(result.getString(counter));
+			System.out
+					.println(result.getString("id") + " " + result.getString("title") + " " + result.getString("year"));
 			counter++;
 		}
 	}
@@ -152,13 +152,13 @@ public class MovieManagementSystem {
 	public void deleteMovie(int movieId) {
 
 		// take movie id
-		try {   	
-    	String sqlStmt = String.format("DELETE FROM movies WHERE id = %s",movieId);
+		try {
+			String sqlStmt = String.format("DELETE FROM movies WHERE id = %s", movieId);
 
 			int rows = md.update(sqlStmt);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}  
+		}
 	}
 }
