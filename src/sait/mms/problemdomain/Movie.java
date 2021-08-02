@@ -40,6 +40,19 @@ public class Movie  implements Serializable{
 		this.title = title;
 		this.year = year;
 	}
+	
+	/**
+	 *  Creates a movie object with constructors for the fields.
+	 * @param duration The duration of the movie.
+	 * @param title The title of the movie.
+	 * @param year The year the movie was released.
+	 */
+	public Movie(int duration, String title, int year) {
+		super();
+		this.duration = duration;
+		this.title = title;
+		this.year = year;
+	}
 
 	/** 
 	 * Gets the ID of the movie.
