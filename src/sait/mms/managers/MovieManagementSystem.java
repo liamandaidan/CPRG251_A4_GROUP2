@@ -129,7 +129,8 @@ public class MovieManagementSystem {
 		int numResults = result.getFetchSize();
 		int counter = 1;
 		while (result.next()) {
-			System.out.println(result.getString(counter));
+			System.out
+					.println(result.getString("id") + " " + result.getString("title") + " " + result.getString("year"));
 			counter++;
 		}
 	}
