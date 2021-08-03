@@ -60,16 +60,16 @@ public class MovieManagementSystem {
 				in.nextLine(); // flush the line
 				switch (option) {
 				case 1:
-					System.out.println("Enter movie title: ");
+					System.out.printf("Enter movie title: ");
 					title = in.nextLine();
-					System.out.println("Enter duration: ");
+					System.out.printf("Enter duration: ");
 					duration = in.nextInt();
-					System.out.println("Enter year: ");
+					System.out.printf("Enter year: ");
 					year = in.nextInt();
 					addMovie(duration, title, year);
 					break;
 				case 2:
-					System.out.println("Enter in year: ");
+					System.out.printf("Enter in year: ");
 					year = in.nextInt();
 					printMoviesInYear(year);
 					break;
@@ -78,7 +78,7 @@ public class MovieManagementSystem {
 					printRandomMovies();
 					break;
 				case 4:
-					System.out.println("Enter the movie ID you want to delete: ");
+					System.out.printf("Enter the movie ID you want to delete: ");
 					id = in.nextInt();
 					deleteMovie(id);
 					break;
@@ -86,7 +86,7 @@ public class MovieManagementSystem {
 					valid = true;
 					break;
 				default:
-					System.out.println("Please enter a number from 1 - 5.\n");
+					System.out.printf("Please enter a number from 1 - 5.\n");
 					break;
 				}
 
