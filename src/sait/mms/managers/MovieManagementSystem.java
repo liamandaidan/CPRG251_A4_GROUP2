@@ -4,12 +4,13 @@
 package sait.mms.managers;
 
 import java.sql.*;
+import java.time.*;
 import java.util.*;
 import sait.mms.drivers.MariaDBDriver;
 import sait.mms.problemdomain.Movie;
 
 /**
- * @author Benson
+ * @author Benson, Liam, Robyn, Mike
  *
  */
 public class MovieManagementSystem {
@@ -43,14 +44,13 @@ public class MovieManagementSystem {
 		int id, duration, year;
 
 		int option;
-		int randomMovieNum;
 		boolean valid = false;
 
 		in = new Scanner(System.in);
 
 		do {
 
-			System.out.printf("Jim's Movie Manager%n" + "1. Add New Movie%n" + "2. Print movies releaased in year%n"
+			System.out.printf("Jim's Movie Manager%n" + "1. Add New Movie%n" + "2. Print movies released in year%n"
 					+ "3. Print random list of movies%n" + "4. Delete a movie%n" + "5. Exit%n%n");
 
 			System.out.printf("Enter option: ");
@@ -60,33 +60,34 @@ public class MovieManagementSystem {
 				in.nextLine(); // flush the line
 				switch (option) {
 				case 1:
-					System.out.println("Enter movie title: ");
+					System.out.printf("\nEnter movie title: ");
 					title = in.nextLine();
-					System.out.println("Enter duration: ");
+					System.out.printf("Enter duration: ");
 					duration = in.nextInt();
-					System.out.println("Enter year: ");
+					System.out.printf("Enter year: ");
 					year = in.nextInt();
 					addMovie(duration, title, year);
 					break;
 				case 2:
-					System.out.println("Enter in year: ");
+					System.out.printf("\nEnter in year: ");
 					year = in.nextInt();
 					printMoviesInYear(year);
 					break;
 				case 3:
-					System.out.println("Enter number of movies: ");
-					randomMovieNum = in.nextInt();
+					// System.out.println("Enter number of movies: ");
+					printRandomMovies();
 					break;
 				case 4:
-					System.out.println("Enter the movie ID you want to delete: ");
+					System.out.printf("\nEnter the movie ID you want to delete: ");
 					id = in.nextInt();
 					deleteMovie(id);
 					break;
 				case 5:
 					valid = true;
+					System.out.println("\nGoodbye!\n");
 					break;
 				default:
-					System.out.println("Please enter a number from 1 - 5.\n");
+					System.out.printf("Please enter a number from 1 - 5.\n");
 					break;
 				}
 
@@ -116,7 +117,7 @@ public class MovieManagementSystem {
 		String sqlStatement = "INSERT INTO movies(duration, title, year) VALUES(" + film.getDuration() + ",'"
 				+ film.getTitle() + "'," + film.getYear() + ");";
 		int rows = md.update(sqlStatement);
-		System.out.println(rows + " rows added to database.");
+		System.out.println("Added movie to database.\n");
 
 	}
 
@@ -127,23 +128,53 @@ public class MovieManagementSystem {
 		String sqlStatement = "SELECT * FROM movies WHERE year = " + yr + ";";
 		ResultSet result = md.get(sqlStatement);
 		int numResults = result.getFetchSize();
-		int counter = 1;
+		int counter = 0;
+		String f = String.format("\nMovie List\n%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
+		// String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
 		while (result.next()) {
-			System.out
-					.println(result.getString("id") + " " + result.getString("title") + " " + result.getString("year"));
-			counter++;
+			f += String.format("%-8s\t%4s\t%-255s\n", result.getInt(2), result.getInt(4), result.getString(3));
+			counter += result.getInt(2);
 		}
+		System.out.println(f + "\nTotal duration: " + counter + " minutes\n");
 	}
 
 	/**
+	 * @throws SQLException
 	 * 
 	 */
-	public void printRandomMovies() {
+	public void printRandomMovies() throws SQLException {
 		// Step 1 select how many movies there are total
+		System.out.print("\nEnter number of movies: ");
+		int movies = in.nextInt();
 		String sqlStmt = "SELECT COUNT(id) FROM movies";
+		String sqlInp = "SELECT * FROM movies";
 		// Step 2 select a random movie
+		int duration, year;
+		String title;
+		System.out.println("\nMovie List");
+		int durCount = 0;
+		String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
+		for (int h = 0; h < movies; h++) {// repeat how ever many movies we look for
+			ResultSet randNum = md.get(sqlStmt);
+			randNum.next();
+			int rand = (int) (randNum.getInt(1) * Math.random());
+			ResultSet result = md.get(sqlInp);
+			for (int i = 1; i <= rand && result.next(); i++) {
+				// loop through movies until we reach a random index. Since the ID could be
+				// deleted.
+				if (i == rand) {
+					duration = result.getInt(2);
+					title = result.getString(3);
+					year = result.getInt(4);
+					f += String.format("%-8s\t%4s\t%-255s\n", duration, year, title);
+					durCount += duration;
+				}
 
-		// Watch out for an index removal case. EG movie at ID 2 missing
+			}
+		}
+
+		System.out.println(f + "\nTotal duration: " + durCount + " minutes\n\n");
+
 	}
 
 	/**
@@ -154,8 +185,8 @@ public class MovieManagementSystem {
 		// take movie id
 		try {
 			String sqlStmt = String.format("DELETE FROM movies WHERE id = %s", movieId);
-
 			int rows = md.update(sqlStmt);
+			System.out.println("\nMovie " + movieId + " is deleted.\n");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
