@@ -4,7 +4,7 @@
 package sait.mms.managers;
 
 import java.sql.*;
-import java.time.Duration;
+import java.time.*;
 import java.util.*;
 import sait.mms.drivers.MariaDBDriver;
 import sait.mms.problemdomain.Movie;
@@ -74,7 +74,7 @@ public class MovieManagementSystem {
 					printMoviesInYear(year);
 					break;
 				case 3:
-					//System.out.println("Enter number of movies: ");
+					// System.out.println("Enter number of movies: ");
 					printRandomMovies();
 					break;
 				case 4:
@@ -140,35 +140,38 @@ public class MovieManagementSystem {
 	 */
 	public void printRandomMovies() throws SQLException {
 		// Step 1 select how many movies there are total
+		System.out.println("Enter number of movies: ");
+		int movies = in.nextInt();
 		String sqlStmt = "SELECT COUNT(id) FROM movies";
-		ResultSet randNum = md.get(sqlStmt);
-		randNum.next();
-		int rand = (int) (randNum.getInt(1) * Math.random());
 		String sqlInp = "SELECT * FROM movies";
 		// Step 2 select a random movie
-		ResultSet result = md.get(sqlInp);
-		int id, duration, year;;
+		int duration, year;
 		String title;
-		Movie m;
-		for (int i = 0; i <= rand && result.next(); i++) {// loop through movies until we reach a random index. Since the
-															// ID could be deleted.
-			if (i == rand) {
-				id = result.getInt("id");
-				System.out.println(id);
-				duration = result.getInt(1);
-				System.out.println(duration);
-				title = result.getString(2);
-				System.out.println(title);
-				year = result.getInt(3);
-				m = new Movie(id, duration, title, year);
-				System.out.println(m);
+		System.out.println("Movie List");
+		int durCount = 0;
+		String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
+		for (int h = 0; h < movies; h++) {// repeat how ever many movies we look for
+			ResultSet randNum = md.get(sqlStmt);
+			randNum.next();
+			int rand = (int) (randNum.getInt(1) * Math.random());
+			ResultSet result = md.get(sqlInp);
+			for (int i = 1; i <= rand && result.next(); i++) {
+				// loop through movies until we reach a random index. Since the ID could be deleted.
+				if (i == rand) {
+					duration = result.getInt(2);
+					title = result.getString(3);
+					year = result.getInt(4);
+					f += String.format("%-8s\t%4s\t%-255s\n", duration, year, title);
+					durCount += duration;
+				}
+
 			}
-
-			
 		}
-		// Watch out for an index removal case. EG movie at ID 2 missing
+		
+		System.out.println(f+"\nTotal duration: "+durCount+" minutes\n\n");
+		
 	}
-
+	
 	/**
 	 * 
 	 */
