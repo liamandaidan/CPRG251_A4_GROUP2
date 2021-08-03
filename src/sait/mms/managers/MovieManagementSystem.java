@@ -10,7 +10,7 @@ import sait.mms.drivers.MariaDBDriver;
 import sait.mms.problemdomain.Movie;
 
 /**
- * @author Benson
+ * @author Benson, Liam, Robyn, Mike
  *
  */
 public class MovieManagementSystem {
