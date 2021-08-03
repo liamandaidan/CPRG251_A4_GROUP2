@@ -60,7 +60,7 @@ public class MovieManagementSystem {
 				in.nextLine(); // flush the line
 				switch (option) {
 				case 1:
-					System.out.printf("Enter movie title: ");
+					System.out.printf("\nEnter movie title: ");
 					title = in.nextLine();
 					System.out.printf("Enter duration: ");
 					duration = in.nextInt();
@@ -69,7 +69,7 @@ public class MovieManagementSystem {
 					addMovie(duration, title, year);
 					break;
 				case 2:
-					System.out.printf("Enter in year: ");
+					System.out.printf("\nEnter in year: ");
 					year = in.nextInt();
 					printMoviesInYear(year);
 					break;
@@ -78,12 +78,13 @@ public class MovieManagementSystem {
 					printRandomMovies();
 					break;
 				case 4:
-					System.out.printf("Enter the movie ID you want to delete: ");
+					System.out.printf("\nEnter the movie ID you want to delete: ");
 					id = in.nextInt();
 					deleteMovie(id);
 					break;
 				case 5:
 					valid = true;
+					System.out.println("\nGoodbye!\n");
 					break;
 				default:
 					System.out.printf("Please enter a number from 1 - 5.\n");
@@ -116,7 +117,7 @@ public class MovieManagementSystem {
 		String sqlStatement = "INSERT INTO movies(duration, title, year) VALUES(" + film.getDuration() + ",'"
 				+ film.getTitle() + "'," + film.getYear() + ");";
 		int rows = md.update(sqlStatement);
-		System.out.println(rows + " rows added to database.");
+		System.out.println("Added movie to database.\n");
 
 	}
 
@@ -127,12 +128,14 @@ public class MovieManagementSystem {
 		String sqlStatement = "SELECT * FROM movies WHERE year = " + yr + ";";
 		ResultSet result = md.get(sqlStatement);
 		int numResults = result.getFetchSize();
-		int counter = 1;
+		int counter = 0;
+		String f = String.format("\nMovie List\n%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
+		// String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
 		while (result.next()) {
-			System.out
-					.println(result.getString("id") + " " + result.getString("title") + " " + result.getString("year"));
-			counter++;
+			f += String.format("%-8s\t%4s\t%-255s\n", result.getInt(2), result.getInt(4), result.getString(3));
+			counter += result.getInt(2);
 		}
+		System.out.println(f + "\nTotal duration: " + counter + " minutes\n");
 	}
 
 	/**
@@ -141,14 +144,14 @@ public class MovieManagementSystem {
 	 */
 	public void printRandomMovies() throws SQLException {
 		// Step 1 select how many movies there are total
-		System.out.println("Enter number of movies: ");
+		System.out.print("\nEnter number of movies: ");
 		int movies = in.nextInt();
 		String sqlStmt = "SELECT COUNT(id) FROM movies";
 		String sqlInp = "SELECT * FROM movies";
 		// Step 2 select a random movie
 		int duration, year;
 		String title;
-		System.out.println("Movie List");
+		System.out.println("\nMovie List");
 		int durCount = 0;
 		String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
 		for (int h = 0; h < movies; h++) {// repeat how ever many movies we look for
@@ -157,7 +160,8 @@ public class MovieManagementSystem {
 			int rand = (int) (randNum.getInt(1) * Math.random());
 			ResultSet result = md.get(sqlInp);
 			for (int i = 1; i <= rand && result.next(); i++) {
-				// loop through movies until we reach a random index. Since the ID could be deleted.
+				// loop through movies until we reach a random index. Since the ID could be
+				// deleted.
 				if (i == rand) {
 					duration = result.getInt(2);
 					title = result.getString(3);
@@ -168,11 +172,11 @@ public class MovieManagementSystem {
 
 			}
 		}
-		
-		System.out.println(f+"\nTotal duration: "+durCount+" minutes\n\n");
-		
+
+		System.out.println(f + "\nTotal duration: " + durCount + " minutes\n\n");
+
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -181,8 +185,8 @@ public class MovieManagementSystem {
 		// take movie id
 		try {
 			String sqlStmt = String.format("DELETE FROM movies WHERE id = %s", movieId);
-
 			int rows = md.update(sqlStmt);
+			System.out.println("\nMovie " + movieId + " is deleted.\n");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
