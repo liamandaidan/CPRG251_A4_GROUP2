@@ -34,6 +34,7 @@ public class MovieManagementSystem {
 	}
 
 	/**
+	 * This method will display menu for the movie manager
 	 * @author Robyn
 	 * @throws SQLException
 	 */
@@ -50,8 +51,8 @@ public class MovieManagementSystem {
 
 		do {
 
-			System.out.printf("Jim's Movie Manager%n" + "1. Add New Movie%n" + "2. Print movies released in year%n"
-					+ "3. Print random list of movies%n" + "4. Delete a movie%n" + "5. Exit%n%n");
+			System.out.printf("\nJim's Movie Manager\n" + "1. Add New Movie\n" + "2. Print movies released in year\n"
+					+ "3. Print random list of movies\n" + "4. Delete a movie\n" + "5. Exit\n\n");
 
 			System.out.printf("Enter option: ");
 
@@ -60,11 +61,11 @@ public class MovieManagementSystem {
 				in.nextLine(); // flush the line
 				switch (option) {
 				case 1:
-					System.out.printf("\nEnter movie title: ");
+					System.out.print("\nEnter movie title: ");
 					title = in.nextLine();
-					System.out.printf("Enter duration: ");
+					System.out.print("\nEnter duration: ");
 					duration = in.nextInt();
-					System.out.printf("Enter year: ");
+					System.out.print("\nEnter year: ");
 					year = in.nextInt();
 					addMovie(duration, title, year);
 					break;
@@ -77,7 +78,7 @@ public class MovieManagementSystem {
 					System.out.print("\nEnter number of movies: ");
 					int numMovies = in.nextInt();
 					if (numMovies <= 0) {
-						throw new Exception("Please enter a valid integer above 0.");
+						throw new Exception("\nPlease enter a valid integer above 0.");
 					}
 					printRandomMovies(numMovies);
 					break;
@@ -91,12 +92,12 @@ public class MovieManagementSystem {
 					System.out.println("\nGoodbye!\n");
 					break;
 				default:
-					System.out.printf("Please enter a number from 1 - 5.\n");
+					System.out.printf("\nPlease check your input and try again\n");
 					break;
 				}
 
 			} catch (InputMismatchException e) {
-				System.out.println("Please check your input and try again\n");
+				System.out.println("\nPlease check your input and try again\n");
 				in.next(); 
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
@@ -184,11 +185,11 @@ public class MovieManagementSystem {
 	}
 
 	/**
-	 * 
+	 * This method will take the movie id the user enters and check if it exists in 
+	 * the database. If so, it will delete it from the database. 
 	 */
 	public void deleteMovie(int movieId) {
 
-		// take movie id
 		try {
 			String checkStmt = String.format("SELECT * FROM movies WHERE id = %s", movieId);
 			ResultSet chkResult = md.get(checkStmt);
