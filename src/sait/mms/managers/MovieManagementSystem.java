@@ -127,15 +127,18 @@ public class MovieManagementSystem {
 	public void printMoviesInYear(int yr) throws SQLException {
 		String sqlStatement = "SELECT * FROM movies WHERE year = " + yr + ";";
 		ResultSet result = md.get(sqlStatement);
-		int numResults = result.getFetchSize();
 		int counter = 0;
-		String f = String.format("\nMovie List\n%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
-		// String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
-		while (result.next()) {
-			f += String.format("%-8s\t%4s\t%-255s\n", result.getInt(2), result.getInt(4), result.getString(3));
-			counter += result.getInt(2);
+		if (result.next()) {
+			String f = String.format("\nMovie List\n%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
+			// String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
+			while (result.next()) {
+				f += String.format("%-8s\t%4s\t%-255s\n", result.getInt(2), result.getInt(4), result.getString(3));
+				counter += result.getInt(2);
+			}
+			System.out.println(f + "\nTotal duration: " + counter + " minutes\n");
+		} else {
+			System.out.println("\nNo Movie Found\nPlease Seach For Another Year\n");
 		}
-		System.out.println(f + "\nTotal duration: " + counter + " minutes\n");
 	}
 
 	/**
@@ -186,13 +189,11 @@ public class MovieManagementSystem {
 		try {
 			String checkStmt = String.format("SELECT * FROM movies WHERE id = %s", movieId);
 			ResultSet chkResult = md.get(checkStmt);
-			if(chkResult.next())
-			{
+			if (chkResult.next()) {
 				String sqlStmt = String.format("DELETE FROM movies WHERE id = %s", movieId);
 				int rows = md.update(sqlStmt);
 				System.out.println("\nMovie " + movieId + " is deleted.\n");
-			} else
-			{
+			} else {
 				System.out.println("I'm sorry Dave, I'm afraid I can't do that.");
 			}
 		} catch (SQLException e) {
