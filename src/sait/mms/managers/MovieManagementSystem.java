@@ -6,6 +6,9 @@ package sait.mms.managers;
 import java.sql.*;
 import java.time.*;
 import java.util.*;
+
+import javax.lang.model.util.ElementScanner6;
+
 import sait.mms.drivers.MariaDBDriver;
 import sait.mms.problemdomain.Movie;
 
@@ -62,8 +65,8 @@ public class MovieManagementSystem {
 				case 1:
 					System.out.printf("\nEnter movie title: ");
 					title = in.nextLine();
-					System.out.printf("Enter duration: ");
-					duration = in.nextInt();
+					System.out.printf("Enter duration: ");			
+					duration = in.nextInt();			
 					System.out.printf("Enter year: ");
 					year = in.nextInt();
 					addMovie(duration, title, year);
@@ -94,7 +97,7 @@ public class MovieManagementSystem {
 			} catch (InputMismatchException e) {
 				System.out.println("Please enter a number from 1 - 5.\n");
 				in.next(); // clear the input
-				continue;
+				//continue;
 			}
 
 		} while (!valid);
