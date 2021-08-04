@@ -34,8 +34,9 @@ public class MovieManagementSystem {
 	}
 
 	/**
+	 * Displays the menu for the application.
 	 * @author Robyn
-	 * @throws SQLException
+	 * @throws SQLException Throws an SQL Exception.
 	 */
 
 	public void displayMenu() throws SQLException {
@@ -97,8 +98,8 @@ public class MovieManagementSystem {
 
 			} catch (InputMismatchException e) {
 				System.out.println("Please check your input and try again\n");
-				in.next(); 
-			}catch(Exception e) {
+				in.next();
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 
@@ -111,11 +112,12 @@ public class MovieManagementSystem {
 	}
 
 	/**
-	 * 
-	 * @param id    the movie id
-	 * @param dur   the movie duration
-	 * @param title the movie title
-	 * @param yr    the year the movie released
+	 * Adds a movie into the database.
+	 * @param id    The movie id.
+	 * @param dur   The movie duration.
+	 * @param title The movie title.
+	 * @param yr    The year the movie released.
+	 * @throws SQLException Throws an SQL Exception.
 	 */
 	public void addMovie(int dur, String title, int yr) throws SQLException {
 		Movie film = new Movie(dur, title, yr);
@@ -127,7 +129,9 @@ public class MovieManagementSystem {
 	}
 
 	/**
-	 * @param yr the year to display
+	 * Prints out all of the movies released in a specific year. 
+	 * @param yr the year to display.
+	 * @throws SQLException Throws an SQL Exception.
 	 */
 	public void printMoviesInYear(int yr) throws SQLException {
 		String sqlStatement = "SELECT * FROM movies WHERE year = " + yr + ";";
@@ -147,8 +151,9 @@ public class MovieManagementSystem {
 	}
 
 	/**
-	 * @throws SQLException
-	 * 
+	 * Prints out a random number of movies.
+	 * @param numOfMovies The number of movies you want in a list.
+	 * @throws SQLException Throws an SQL Exception.
 	 */
 	public void printRandomMovies(int numOfMovies) throws SQLException {
 		// Step 1 select how many movies there are total
@@ -184,7 +189,8 @@ public class MovieManagementSystem {
 	}
 
 	/**
-	 * 
+	 * Deletes a movie based on the ID of the movie.
+	 * @param movieID The ID of the movie.
 	 */
 	public void deleteMovie(int movieId) {
 
