@@ -74,8 +74,12 @@ public class MovieManagementSystem {
 					printMoviesInYear(year);
 					break;
 				case 3:
-					// System.out.println("Enter number of movies: ");
-					printRandomMovies();
+					System.out.print("\nEnter number of movies: ");
+					int numMovies = in.nextInt();
+					if (numMovies <= 0) {
+						throw new Exception("Please enter a valid integer above 0.");
+					}
+					printRandomMovies(numMovies);
 					break;
 				case 4:
 					System.out.printf("\nEnter the movie ID you want to delete: ");
@@ -92,9 +96,10 @@ public class MovieManagementSystem {
 				}
 
 			} catch (InputMismatchException e) {
-				System.out.println("Please enter a number from 1 - 5.\n");
-				in.next(); // clear the input
-				continue;
+				System.out.println("Please check your input and try again\n");
+				in.next(); 
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
 			}
 
 		} while (!valid);
@@ -127,30 +132,26 @@ public class MovieManagementSystem {
 	public void printMoviesInYear(int yr) throws SQLException {
 		String sqlStatement = "SELECT * FROM movies WHERE year = " + yr + ";";
 		ResultSet result = md.get(sqlStatement);
-		int numResults = result.getFetchSize();
-		System.out.println(numResults);
-		if (numResults == 0) {
-			System.out.println("\nNo Movies found\nPlease Try Another Search\n");
-			return;
-		}
 		int counter = 0;
-		String f = String.format("\nMovie List\n%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
-		// String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
-		while (result.next()) {
-			f += String.format("%-8s\t%4s\t%-255s\n", result.getInt(2), result.getInt(4), result.getString(3));
-			counter += result.getInt(2);
+		if (result.next()) {
+			String f = String.format("\nMovie List\n%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
+			// String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
+			while (result.next()) {
+				f += String.format("%-8s\t%4s\t%-255s\n", result.getInt(2), result.getInt(4), result.getString(3));
+				counter += result.getInt(2);
+			}
+			System.out.println(f + "\nTotal duration: " + counter + " minutes\n");
+		} else {
+			System.out.println("\nNo Movie Found\nPlease Seach For Another Year\n");
 		}
-		System.out.println(f + "\nTotal duration: " + counter + " minutes\n");
 	}
 
 	/**
 	 * @throws SQLException
 	 * 
 	 */
-	public void printRandomMovies() throws SQLException {
+	public void printRandomMovies(int numOfMovies) throws SQLException {
 		// Step 1 select how many movies there are total
-		System.out.print("\nEnter number of movies: ");
-		int movies = in.nextInt();
 		String sqlStmt = "SELECT COUNT(id) FROM movies";
 		String sqlInp = "SELECT * FROM movies";
 		// Step 2 select a random movie
@@ -159,7 +160,7 @@ public class MovieManagementSystem {
 		System.out.println("\nMovie List");
 		int durCount = 0;
 		String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
-		for (int h = 0; h < movies; h++) {// repeat how ever many movies we look for
+		for (int h = 0; h < numOfMovies; h++) {// repeat how ever many movies we look for
 			ResultSet randNum = md.get(sqlStmt);
 			randNum.next();
 			int rand = (int) (randNum.getInt(1) * Math.random());
@@ -189,11 +190,16 @@ public class MovieManagementSystem {
 
 		// take movie id
 		try {
-			String sqlStmt = String.format("DELETE FROM movies WHERE id = %s", movieId);
-			int rows = md.update(sqlStmt);
-			System.out.println("\nMovie " + movieId + " is deleted.\n");
+			String checkStmt = String.format("SELECT * FROM movies WHERE id = %s", movieId);
+			ResultSet chkResult = md.get(checkStmt);
+			if (chkResult.next()) {
+				String sqlStmt = String.format("DELETE FROM movies WHERE id = %s", movieId);
+				int rows = md.update(sqlStmt);
+				System.out.println("\nMovie " + movieId + " is deleted.\n");
+			} else {
+				System.out.println("I'm sorry Dave, I'm afraid I can't do that.");
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
