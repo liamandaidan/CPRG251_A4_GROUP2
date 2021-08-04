@@ -184,11 +184,18 @@ public class MovieManagementSystem {
 
 		// take movie id
 		try {
-			String sqlStmt = String.format("DELETE FROM movies WHERE id = %s", movieId);
-			int rows = md.update(sqlStmt);
-			System.out.println("\nMovie " + movieId + " is deleted.\n");
+			String checkStmt = String.format("SELECT * FROM movies WHERE id = %s", movieId);
+			ResultSet chkResult = md.get(checkStmt);
+			if(chkResult.next())
+			{
+				String sqlStmt = String.format("DELETE FROM movies WHERE id = %s", movieId);
+				int rows = md.update(sqlStmt);
+				System.out.println("\nMovie " + movieId + " is deleted.\n");
+			} else
+			{
+				System.out.println("I'm sorry Dave, I'm afraid I can't do that.");
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
