@@ -145,7 +145,11 @@ public class MovieManagementSystem {
 	public void printRandomMovies() throws SQLException {
 		// Step 1 select how many movies there are total
 		System.out.print("\nEnter number of movies: ");
+		try {
 		int movies = in.nextInt();
+		if(movies<=0) {
+			throw new Exception("Can't use this integer: "+movies);
+		}
 		String sqlStmt = "SELECT COUNT(id) FROM movies";
 		String sqlInp = "SELECT * FROM movies";
 		// Step 2 select a random movie
@@ -174,6 +178,13 @@ public class MovieManagementSystem {
 		}
 
 		System.out.println(f + "\nTotal duration: " + durCount + " minutes\n\n");
+		}catch(InputMismatchException e) {
+			System.out.println("\nPlease enter an integer next time instead\n");
+		}catch(Exception e) {
+			System.out.println("\n"+e.getMessage()+"\n");
+		}
+		
+
 
 	}
 
