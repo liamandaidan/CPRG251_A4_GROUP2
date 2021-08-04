@@ -128,6 +128,11 @@ public class MovieManagementSystem {
 		String sqlStatement = "SELECT * FROM movies WHERE year = " + yr + ";";
 		ResultSet result = md.get(sqlStatement);
 		int numResults = result.getFetchSize();
+		System.out.println(numResults);
+		if (numResults == 0) {
+			System.out.println("\nNo Movies found\nPlease Try Another Search\n");
+			return;
+		}
 		int counter = 0;
 		String f = String.format("\nMovie List\n%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
 		// String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
