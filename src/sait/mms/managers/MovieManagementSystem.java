@@ -6,9 +6,6 @@ package sait.mms.managers;
 import java.sql.*;
 import java.time.*;
 import java.util.*;
-
-import javax.lang.model.util.ElementScanner6;
-
 import sait.mms.drivers.MariaDBDriver;
 import sait.mms.problemdomain.Movie;
 
@@ -65,8 +62,8 @@ public class MovieManagementSystem {
 				case 1:
 					System.out.printf("\nEnter movie title: ");
 					title = in.nextLine();
-					System.out.printf("Enter duration: ");			
-					duration = in.nextInt();			
+					System.out.printf("Enter duration: ");
+					duration = in.nextInt();
 					System.out.printf("Enter year: ");
 					year = in.nextInt();
 					addMovie(duration, title, year);
@@ -77,8 +74,12 @@ public class MovieManagementSystem {
 					printMoviesInYear(year);
 					break;
 				case 3:
-					// System.out.println("Enter number of movies: ");
-					printRandomMovies();
+					System.out.print("\nEnter number of movies: ");
+					int numMovies = in.nextInt();
+					if (numMovies <= 0) {
+						throw new Exception("Please enter a valid integer above 0.");
+					}
+					printRandomMovies(numMovies);
 					break;
 				case 4:
 					System.out.printf("\nEnter the movie ID you want to delete: ");
@@ -95,9 +96,10 @@ public class MovieManagementSystem {
 				}
 
 			} catch (InputMismatchException e) {
-				System.out.println("Please enter a number from 1 - 5.\n");
-				in.next(); // clear the input
-				//continue;
+				System.out.println("Please check your input and try again\n");
+				in.next(); 
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
 			}
 
 		} while (!valid);
@@ -148,14 +150,8 @@ public class MovieManagementSystem {
 	 * @throws SQLException
 	 * 
 	 */
-	public void printRandomMovies() throws SQLException {
+	public void printRandomMovies(int numOfMovies) throws SQLException {
 		// Step 1 select how many movies there are total
-		System.out.print("\nEnter number of movies: ");
-		try {
-		int movies = in.nextInt();
-		if(movies<=0) {
-			throw new Exception("Can't use this integer: "+movies);
-		}
 		String sqlStmt = "SELECT COUNT(id) FROM movies";
 		String sqlInp = "SELECT * FROM movies";
 		// Step 2 select a random movie
@@ -164,7 +160,7 @@ public class MovieManagementSystem {
 		System.out.println("\nMovie List");
 		int durCount = 0;
 		String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
-		for (int h = 0; h < movies; h++) {// repeat how ever many movies we look for
+		for (int h = 0; h < numOfMovies; h++) {// repeat how ever many movies we look for
 			ResultSet randNum = md.get(sqlStmt);
 			randNum.next();
 			int rand = (int) (randNum.getInt(1) * Math.random());
@@ -184,13 +180,6 @@ public class MovieManagementSystem {
 		}
 
 		System.out.println(f + "\nTotal duration: " + durCount + " minutes\n\n");
-		}catch(InputMismatchException e) {
-			System.out.println("\nPlease enter an integer next time instead\n");
-		}catch(Exception e) {
-			System.out.println("\n"+e.getMessage()+"\n");
-		}
-		
-
 
 	}
 
