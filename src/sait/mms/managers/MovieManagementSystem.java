@@ -76,6 +76,9 @@ public class MovieManagementSystem {
 				case 3:
 					System.out.print("\nEnter number of movies: ");
 					int numMovies = in.nextInt();
+					if (numMovies <= 0) {
+						throw new Exception("Please enter a valid integer above 0.");
+					}
 					printRandomMovies(numMovies);
 					break;
 				case 4:
@@ -93,9 +96,10 @@ public class MovieManagementSystem {
 				}
 
 			} catch (InputMismatchException e) {
-				System.out.println("Please enter a number from 1 - 5.\n");
-				in.next(); // clear the input
-				continue;
+				System.out.println("Please check your input and try again\n");
+				in.next(); 
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
 			}
 
 		} while (!valid);
