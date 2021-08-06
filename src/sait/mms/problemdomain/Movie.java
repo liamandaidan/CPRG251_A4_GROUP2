@@ -6,6 +6,7 @@ package sait.mms.problemdomain;
 import java.io.Serializable;
 
 /**
+ * Creation of the movie object.
  * @author Mikepcann
  *
  */
@@ -27,7 +28,7 @@ public class Movie  implements Serializable{
 	}
 
 	/**
-	 *  Creates a movie object with constructors for the fields.
+	 * Creates a movie object with constructors for the fields.
 	 * @param id Id number of the movie.
 	 * @param duration The duration of the movie.
 	 * @param title The title of the movie.
@@ -42,7 +43,7 @@ public class Movie  implements Serializable{
 	}
 	
 	/**
-	 *  Creates a movie object with constructors for the fields.
+	 * Creates a movie object with constructors for the fields.
 	 * @param duration The duration of the movie.
 	 * @param title The title of the movie.
 	 * @param year The year the movie was released.
@@ -62,7 +63,8 @@ public class Movie  implements Serializable{
 		return id;
 	}
 
-	/** Sets the ID of the movie.
+	/** 
+	 * Sets the ID of the movie.
 	 * @param id the id to set.
 	 */
 	public void setId(int id) {
@@ -70,7 +72,7 @@ public class Movie  implements Serializable{
 	}
 
 	/**
-	 *  Gets the duration of the movie.
+	 * Gets the duration of the movie.
 	 * @return the duration.
 	 */
 	public int getDuration() {
@@ -78,7 +80,7 @@ public class Movie  implements Serializable{
 	}
 
 	/**
-	 *  Sets the duration of the movie.
+	 * Sets the duration of the movie.
 	 * @param duration the duration to set.
 	 */
 	public void setDuration(int duration) {
@@ -86,7 +88,7 @@ public class Movie  implements Serializable{
 	}
 
 	/**
-	 *  Gets the title of the movie.
+	 * Gets the title of the movie.
 	 * @return the title of the movie.
 	 */
 	public String getTitle() {
@@ -94,7 +96,7 @@ public class Movie  implements Serializable{
 	}
 
 	/** 
-	 *  Sets the title of the movie.
+	 * Sets the title of the movie.
 	 * @param title the title of the movie.
 	 */
 	public void setTitle(String title) {
@@ -102,7 +104,7 @@ public class Movie  implements Serializable{
 	}
 
 	/**
-	 *  Gets the year the movie was published.
+	 * Gets the year the movie was published.
 	 * @return the year the movie was published.
 	 */
 	public int getYear() {
@@ -110,7 +112,7 @@ public class Movie  implements Serializable{
 	}
 
 	/**
-	 *  Sets the year the movie was published.
+	 * Sets the year the movie was published.
 	 * @param year The year the movie was published. 
 	 */
 	public void setYear(int year) {
@@ -118,7 +120,7 @@ public class Movie  implements Serializable{
 	}
 
 	/**
-	 *  Returns the movie object as a formatted String.
+	 * Returns the movie object as a formatted String.
 	 * @return The movie object represented as a string.
 	 */
 	@Override
