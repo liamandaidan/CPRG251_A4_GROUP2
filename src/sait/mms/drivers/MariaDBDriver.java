@@ -7,6 +7,7 @@ import java.sql.*;
 import sait.mms.contracts.DatabaseDriver;
 
 /**
+ * This is the driver for the database using the interface.
  * @author Ali
  *
  */

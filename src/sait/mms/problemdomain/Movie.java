@@ -6,6 +6,7 @@ package sait.mms.problemdomain;
 import java.io.Serializable;
 
 /**
+ * Creation of the movie object.
  * @author Mikepcann
  *
  */

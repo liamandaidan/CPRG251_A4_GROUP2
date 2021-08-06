@@ -2,7 +2,10 @@ package sait.mms.contracts;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * This is the interface for the database
+ *
+ */
 public interface DatabaseDriver {
 	/**
 	 * Connects to the database.

@@ -10,6 +10,7 @@ import sait.mms.drivers.MariaDBDriver;
 import sait.mms.problemdomain.Movie;
 
 /**
+ * This class will manage the movie system. It also controls the display.
  * @author Benson, Liam, Robyn, Mike
  *
  */
