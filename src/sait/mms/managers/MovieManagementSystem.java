@@ -11,6 +11,7 @@ import sait.mms.problemdomain.Movie;
 
 /**
  * This class will manage the movie system. It also controls the display.
+ * 
  * @author Benson, Liam, Robyn, Mike
  *
  */
@@ -36,6 +37,7 @@ public class MovieManagementSystem {
 
 	/**
 	 * Displays the menu for the application.
+	 * 
 	 * @author Robyn
 	 * @throws SQLException Throws an SQL Exception.
 	 */
@@ -114,6 +116,7 @@ public class MovieManagementSystem {
 
 	/**
 	 * Adds a movie into the database.
+	 * 
 	 * @param id    The movie id.
 	 * @param dur   The movie duration.
 	 * @param title The movie title.
@@ -130,7 +133,8 @@ public class MovieManagementSystem {
 	}
 
 	/**
-	 * Prints out all of the movies released in a specific year. 
+	 * Prints out all of the movies released in a specific year.
+	 * 
 	 * @param yr the year to display.
 	 * @throws SQLException Throws an SQL Exception.
 	 */
@@ -138,21 +142,22 @@ public class MovieManagementSystem {
 		String sqlStatement = "SELECT * FROM movies WHERE year = " + yr + ";";
 		ResultSet result = md.get(sqlStatement);
 		int counter = 0;
-		if (result.next()) {
-			String f = String.format("\nMovie List\n%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
-			// String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
-			while (result.next()) {
-				f += String.format("%-8s\t%4s\t%-255s\n", result.getInt(2), result.getInt(4), result.getString(3));
-				counter += result.getInt(2);
-			}
-			System.out.println(f + "\nTotal duration: " + counter + " minutes\n");
-		} else {
-			System.out.println("\nNo Movie Found\nPlease Seach For Another Year\n");
+		String f = String.format("\nMovie List\n%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
+		// String f = String.format("%-8s\t%4s\t%-255s\n", "Duration", "Year", "Title");
+		while (result.next()) {
+			f += String.format("%-8s\t%4s\t%-255s\n", result.getInt(2), result.getInt(4), result.getString(3));
+			counter += result.getInt(2);
 		}
+		if (counter == 0)
+			System.out.println("\nNo Movie Found\nPlease Seach For Another Year\n");
+		else
+			System.out.println(f + "\nTotal duration: " + counter + " minutes\n");
+
 	}
 
 	/**
 	 * Prints out a random number of movies.
+	 * 
 	 * @param numOfMovies The number of movies you want in a list.
 	 * @throws SQLException Throws an SQL Exception.
 	 */
@@ -191,6 +196,7 @@ public class MovieManagementSystem {
 
 	/**
 	 * Deletes a movie based on the ID of the movie.
+	 * 
 	 * @param movieID The ID of the movie.
 	 */
 	public void deleteMovie(int movieId) {
